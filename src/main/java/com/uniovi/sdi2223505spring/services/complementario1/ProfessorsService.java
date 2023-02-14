@@ -14,8 +14,8 @@ public class ProfessorsService {
 
     @PostConstruct
     public void init() {
-        professorsList.add(new Professor("1A", "Nombre1", "Apellido1", "Usuario"));
-        professorsList.add(new Professor("2B", "Nombre2", "Apellido2", "Usuario"));
+        professorsList.add(new Professor("1A", "Nombre1", "Apellido1", "Profesor"));
+        professorsList.add(new Professor("2B", "Nombre2", "Apellido2", "Profesor"));
     }
 
     public Object getProfessors() {
