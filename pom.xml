@@ -15,7 +15,7 @@
     <name>sdi-2223-505-spring</name>
     <description>sdi-2223-505-spring</description>
     <properties>
-        <java.version>17</java.version>
+        <java.version>16</java.version>
     </properties>
     <dependencies>
         <dependency>
@@ -60,6 +60,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${project.parent.version}</version>
             </plugin>
         </plugins>
     </build>
