@@ -69,18 +69,32 @@
     </div>
 </nav>
 <div class="container" id="main-container">
-    <h2>Eliminar Profesor</h2>
-    <form class="form-horizontal" method="post" th:action="${'/professor/delete/' + professor.dni}">
+    <h2>Editar profesor</h2>
+    <form class="form-horizontal" method="post" th:action="${'/professor/edit/' + professor.dni}">
         <div class="form-group">
-            <label class="control-label col-sm-2" for="dni">Dni::</label>
+            <label class="control-label col-sm-2" for="name">Nombre:</label>
             <div class="col-sm-10">
-                <input th:value="{professor.dni}" id="dni" type="text" class="form-control" name="dni"
-                       placeholder="1A" required="true"/>
+                <input th:value="{professor.name}" id="name" type="text" class="form-control" name="name"
+                       placeholder="Nombre1" required="true"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="surname">Apellido:</label>
+            <div class="col-sm-10">
+                <input th:value="{professor.surname}" id="surname" type="text" class="form-control" name="surname"
+                       placeholder="Apellido1" required="true"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="category">Categoría:</label>
+            <div class="col-sm-10">
+                <input th:value="{professor.category}" id="category" type="text" class="form-control" name="category"
+                       placeholder="Profesor" required="true"/>
             </div>
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-primary">Eliminar</button>
+                <button type="submit" class="btn btn-primary">Modificar</button>
             </div>
         </div>
     </form>

@@ -55,4 +55,11 @@ public class MarksController {
         return "redirect:/mark/details/"+id;
     }
 
+    // Defino el endpoint para devolver el fragmento correspondiente, en lugar de la vista completa
+    @RequestMapping("/mark/list/update")
+    public String updateList(Model model) {
+        model.addAttribute("markList", marksService.getMarks());
+        return "mark/list :: tableMarks";
+    }
+
 }
