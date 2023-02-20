@@ -6,5 +6,6 @@ import org.springframework.data.repository.CrudRepository;
 // Repositorio para la entidad User
 public interface UsersRepository extends CrudRepository<User, Long> {
 
+    User findByDni(String dni);
 
 }

@@ -9,12 +9,17 @@ import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 // Gestiona lo relativo a los usuarios
 @Service
 public class UsersService {
 
     @Autowired
     private UsersRepository usersRepository;
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @PostConstruct
     public void init() { }
@@ -27,7 +32,12 @@ public class UsersService {
 
     public User getUser(Long id) { return usersRepository.findById(id).get(); }
 
-    public void addUser(User user) { usersRepository.save(user); }
+    public void addUser(User user) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        usersRepository.save(user);
+    }
+
+    public User getUserByDni(String dni) { return usersRepository.findByDni(dni); }
 
     public void deleteUser(Long id) { usersRepository.deleteById(id); }
 
