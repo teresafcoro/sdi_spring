@@ -18,11 +18,11 @@ public class ProfessorsService {
         professorsList.add(new Professor("2B", "Nombre2", "Apellido2", "Profesor"));
     }
 
-    public Object getProfessors() {
+    public List<Professor> getProfessors() {
         return professorsList;
     }
 
-    public Object getProfessor(String dni) {
+    public Professor getProfessor(String dni) {
         return professorsList.stream().filter(professor -> professor.getDni().equals(dni)).findFirst().get();
     }
 

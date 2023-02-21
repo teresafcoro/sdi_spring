@@ -2,8 +2,11 @@ package com.uniovi.sdi2223505spring.controllers.complementario1;
 
 import com.uniovi.sdi2223505spring.entities.complementario1.Professor;
 import com.uniovi.sdi2223505spring.services.complementario1.ProfessorsService;
+import com.uniovi.sdi2223505spring.validators.ProfessorEditFormValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 
@@ -12,6 +15,9 @@ public class ProfessorController {
 
     @Autowired // Inyectar el servicio
     private ProfessorsService professorsService;
+
+    @Autowired
+    private ProfessorEditFormValidator professorEditFormValidator;
 
     @RequestMapping("/professor/list")
     public String getList(Model model) {
@@ -53,6 +59,26 @@ public class ProfessorController {
         professor.setDni(dni);
         professorsService.addProfessor(professor);
         return "redirect:/professor/details/" + dni;
+    }
+
+    @RequestMapping(value = "/professor/edit", method = RequestMethod.GET)
+    public String modify(Model model) {
+        model.addAttribute("professor", new Professor());
+        return "/professor/edit";
+    }
+
+    @RequestMapping(value = "/professor/edit", method = RequestMethod.POST)
+    public String modify(@Validated Professor professor, BindingResult result) {
+        professorEditFormValidator.validate(professor, result);
+        if (result.hasErrors())
+            return "/professor/edit";
+
+        Professor originalProfessor = professorsService.getProfessor(professor.getDni());
+        originalProfessor.setDni(professor.getDni());
+        originalProfessor.setName(professor.getName());
+        originalProfessor.setSurname(professor.getSurname());
+        professorsService.addProfessor(originalProfessor);
+        return "redirect:home";
     }
 
 }

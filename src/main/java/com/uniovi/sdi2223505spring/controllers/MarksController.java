@@ -2,8 +2,11 @@ package com.uniovi.sdi2223505spring.controllers;
 
 import com.uniovi.sdi2223505spring.services.MarksService;
 import com.uniovi.sdi2223505spring.services.UsersService;
+import com.uniovi.sdi2223505spring.validators.MarkEditFormValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import com.uniovi.sdi2223505spring.entities.Mark;
 import org.springframework.ui.Model;
@@ -17,6 +20,9 @@ public class MarksController {
     // Inyecto el servicio y modifico los siguientes métodos: getMark, y getEdit setEdit
     @Autowired
     private UsersService usersService;
+
+    @Autowired
+    private MarkEditFormValidator markEditFormValidator;
 
     @RequestMapping("/mark/list")
     public String getList(Model model) {
@@ -70,6 +76,25 @@ public class MarksController {
     public String updateList(Model model) {
         model.addAttribute("markList", marksService.getMarks());
         return "mark/list :: tableMarks";
+    }
+
+    @RequestMapping(value = "/mark/edit", method = RequestMethod.GET)
+    public String modify(Model model) {
+        model.addAttribute("mark", new Mark());
+        return "/mark/edit";
+    }
+
+    @RequestMapping(value = "/mark/edit", method = RequestMethod.POST)
+    public String modify(@Validated Mark mark, BindingResult result) {
+        markEditFormValidator.validate(mark, result);
+        if (result.hasErrors())
+            return "/mark/edit";
+
+        Mark originalMark = marksService.getMark(mark.getId());
+        originalMark.setScore(mark.getScore());
+        originalMark.setDescription(mark.getDescription());
+        marksService.addMark(originalMark);
+        return "redirect:home";
     }
 
 }

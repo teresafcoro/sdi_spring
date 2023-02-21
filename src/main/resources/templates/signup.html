@@ -9,7 +9,7 @@
         <div class="form-group"><label class="control-label col-sm-2" for="dni">DNI:</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="dni" name="dni" placeholder="99999999Y"
-                                          required="true"/>
+                       required="true"/>
                 <span class="text-danger" th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}"></span>
             </div>
         </div>
