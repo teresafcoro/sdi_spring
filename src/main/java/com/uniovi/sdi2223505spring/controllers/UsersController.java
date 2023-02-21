@@ -7,7 +7,6 @@ import com.uniovi.sdi2223505spring.validators.SignUpFormValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -31,7 +30,7 @@ public class UsersController {
     private SignUpFormValidator signUpFormValidator;
 
     @RequestMapping("/user/list")
-    public String getListado(Model model) {
+    public String getList(Model model) {
         model.addAttribute("usersList", usersService.getUsers());
         return "user/list";
     }
@@ -62,15 +61,20 @@ public class UsersController {
 
     @RequestMapping(value = "/user/edit/{id}")
     public String getEdit(Model model, @PathVariable Long id) {
-        User user = usersService.getUser(id);
-        model.addAttribute("user", user);
+        model.addAttribute("user", usersService.getUser(id));
+        model.addAttribute("usersList", usersService.getUsers());
         return "user/edit";
     }
 
     @RequestMapping(value = "/user/edit/{id}", method = RequestMethod.POST)
-    public String setEdit(@PathVariable Long id, @ModelAttribute User user) {
-        usersService.addUser(user);
-        return "redirect:/user/details/" + id;
+    public String setEdit(@ModelAttribute User user, @PathVariable Long id) {
+        User originalUser = usersService.getUser(id);
+        // Modifico dni, nombre y apellidos
+        originalUser.setDni(user.getDni());
+        originalUser.setName(user.getName());
+        originalUser.setLastName(user.getLastName());
+        usersService.addUser(originalUser);
+        return "redirect:/user/details/"+id;
     }
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
@@ -86,7 +90,8 @@ public class UsersController {
 
     @RequestMapping(value = "/signup", method = RequestMethod.GET)
     public String signup(Model model) {
-        model.addAttribute("user", new User()); return "signup";
+        model.addAttribute("user", new User());
+        return "signup";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -99,6 +104,13 @@ public class UsersController {
         User activeUser = usersService.getUserByDni(dni);
         model.addAttribute("markList", activeUser.getMarks());
         return "home";
+    }
+
+    // Defino el endpoint para devolver el fragmento correspondiente, en lugar de la vista completa
+    @RequestMapping("/user/list/update")
+    public String updateList(Model model) {
+        model.addAttribute("usersList", usersService.getUsers());
+        return "user/list :: tableUsers";
     }
 
 }
