@@ -2,21 +2,22 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
 <head th:replace="fragments/head"/>
 <body>
+<!-- Barra de Navegación superior -->
 <nav th:replace="fragments/nav"/>
 <div class="container" style="text-align: center">
     <h2 th:text="#{welcome.message}"></h2>
-    <h3>Esta es una zona privada la web</h3>
-    <p> Usuario Autenticado como :
+    <h3 th:text="#{privacy.message}"></h3>
+    <p th:text="#{authentication.message}">
         <b th:inline="text"> [[${#httpServletRequest.remoteUser}]] </b>
     </p>
-    <p>Notas del usuario</p>
+    <p th:text="#{user.marks.message}"></p>
     <div class="table-responsive">
         <table class="table table-hover" th:fragment="tableMarks" id="tableMarks">
             <thead>
             <tr>
                 <th scope="col">id</th>
-                <th scope="col">Descripción</th>
-                <th scope="col">Puntuación</th>
+                <th scope="col" th:text="#{mark.description}"></th>
+                <th scope="col" th:text="#{mark.score}"></th>
                 <th scope="col"></th>
                 <th scope="col"></th>
                 <th scope="col"></th>
@@ -27,9 +28,9 @@
                 <td scope="row" th:text="${mark.id}"> 1</td>
                 <td th:text="${mark.description}"> Ejercicio 1</td>
                 <td th:text="${mark.score}">10</td>
-                <td><a th:href="${'/mark/details/' + mark.id}">detalles</a></td>
-                <td><a th:href="${'/mark/edit/' + mark.id}">modificar</a></td>
-                <td><a th:href="${'/mark/delete/' + mark.id}">eliminar</a></td>
+                <td><a th:href="${'/mark/details/' + mark.id}" th:text="#{mark.details}"></a></td>
+                <td><a th:href="${'/mark/edit/' + mark.id}" th:text="#{mark.edit}"></a></td>
+                <td><a th:href="${'/mark/delete/' + mark.id}" th:text="#{mark.delete}"></a></td>
             </tr>
             </tbody>
         </table>
