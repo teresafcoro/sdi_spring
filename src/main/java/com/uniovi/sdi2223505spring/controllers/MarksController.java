@@ -60,14 +60,14 @@ public class MarksController {
         return "mark/edit";
     }
 
-    @RequestMapping(value="/mark/edit/{id}", method=RequestMethod.POST)
+    @RequestMapping(value = "/mark/edit/{id}", method = RequestMethod.POST)
     public String setEdit(@ModelAttribute Mark mark, @PathVariable Long id) {
         Mark originalMark = marksService.getMark(id);
         // Modifico solo score y description
         originalMark.setScore(mark.getScore());
         originalMark.setDescription(mark.getDescription());
         marksService.addMark(originalMark);
-        return "redirect:/mark/details/"+id;
+        return "redirect:/mark/details/" + id;
     }
 
     // Defino el endpoint para devolver el fragmento correspondiente, en lugar de la vista completa
@@ -94,6 +94,18 @@ public class MarksController {
         originalMark.setDescription(mark.getDescription());
         marksService.addMark(originalMark);
         return "redirect:home";
+    }
+
+    @RequestMapping(value = "/mark/{id}/resend", method = RequestMethod.GET)
+    public String setResendTrue(@PathVariable Long id) {
+        marksService.setMarkResend(true, id);
+        return "redirect:/mark/list";
+    }
+
+    @RequestMapping(value = "/mark/{id}/noresend", method = RequestMethod.GET)
+    public String setResendFalse(@PathVariable Long id) {
+        marksService.setMarkResend(false, id);
+        return "redirect:/mark/list";
     }
 
 }

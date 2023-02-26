@@ -1,95 +1,107 @@
 <!-- nav.html -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-  <a class="navbar-brand" href="#"></a>
-  <img src="/images/student-48.png" alt="logo"/>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#myNavbar"aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="myNavbar">
-  <ul class="navbar-nav mr-auto">
-    <li class="nav-item ">
-      <a class="nav-link" href="/home">Home<span class="sr-only">(current)</span></a>
-    </li>
-    <li class="nav-item dropdown active">
-      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <span th:text="#{mark.message}">Gestión de notas</span>
-      </a>
-      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-        <a class="dropdown-item" href="/mark/list">
-          <span th:text="#{mark.list.message}">Ver Notas</span>
-        </a>
-        <a class="dropdown-item" href="/mark/add">
-          <span th:text="#{mark.add.message}">Agregar Nota</span>
-        </a>
-        <!-- Elimino la opción de filtrado e incorporo un menú desplegable para la gestión de usuarios -->
-      </div>
-    </li>
-    <li class="nav-item dropdown active">
-      <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <span th:text="#{user.message}">Gestión de usuarios</span>
-      </a>
-      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-        <a class="dropdown-item" href="/user/add">
-          <span th:text="#{user.add.message}">Agregar usuarios</span>
-        </a>
-        <a class="dropdown-item" href="/user/list">
-          <span th:text="#{user.list.message}">Ver usuarios</span>
-        </a>
-      </div>
-    </li>
-    <li class="nav-item dropdown">
-      <a class="nav-link dropdown-toggle" href="#" id="profesorDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <span th:text="#{professor.message}">Gestión de profesores</span>
-      </a>
-      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-        <a class="dropdown-item" href="/professor/add">
-          <span th:text="#{professor.add.message}">Agregar profesores</span>
-        </a>
-        <a class="dropdown-item" href="/professor/list">
-          <span th:text="#{professor.list.message}">Ver profesores</span>
-        </a>
-        <a class="dropdown-item" href="/professor/edit">
-          <span th:text="#{professor.edit.message}">Editar profesores</span>
-        </a>
-        <a class="dropdown-item" href="/professor/delete">
-          <span th:text="#{professor.delete.message}">Eliminar profesores</span>
-        </a>
-      </div>
-    </li>
-  </ul>
-    <ul class="navbar-nav justify-content-end">
-      <!-- Añado cambios para la internacionalización -->
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="btnLanguage" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <span th:text="#{language.change}"></span>
-        </a>
-        <div id="languageDropdownMenuButton" class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" id="btnEnglish" value="EN">
-            <img th:src="@{/images/if_uk_flag.png}" style="border: 0; float: left; margin-right: 15px"/>
-            <span th:text="#{language.en}">Inglés</span>
-          </a>
-          <a class="dropdown-item" id="btnSpanish" value="ES">
-            <img th:src="@{/images/if_spain_flag.png}" style="border: 0; float: left; margin-right: 15px"/>
-            <span th:text="#{language.es}">Español</span>
-          </a>
-          <a class="dropdown-item" id="btnFrench" value="FR">
-            <img th:src="@{/images/if_france_flag.png}" style="border: 0; float: left; margin-right: 15px"/>
-            <span th:text="#{language.fr}">Francés</span>
-          </a>
-        </div>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/registrarse">
-          <i class='fas fa-user-alt' style='font-size:16px'></i>
-          <span th:text="#{signup.message}"></span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/identificarse">
-          <i class='fas fa-sign-in-alt' style='font-size:16px'></i>
-          <span th:text="#{login.message}"></span>
-        </a>
-      </li>
-    </ul>
-</div>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary"
+     xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+    <a class="navbar-brand" href="#"></a>
+    <img src="/images/student-48.png" alt="logo"/>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#myNavbar"
+            aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="navbar-nav mr-auto" sec:authorize="isAuthenticated()">
+            <li class="nav-item ">
+                <a class="nav-link" href="/home">Home<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item dropdown active">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    <span th:text="#{mark.message}">Gestión de notas</span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/mark/list">
+                        <span th:text="#{mark.list.message}">Ver Notas</span>
+                    </a>
+                    <a class="dropdown-item" href="/mark/add" sec:authorize="hasRole('ROLE_PROFESSOR')">
+                        <span th:text="#{mark.add.message}">Agregar Nota</span>
+                    </a>
+                    <!-- Elimino la opción de filtrado e incorporo un menú desplegable para la gestión de usuarios -->
+                </div>
+            </li>
+            <li class="nav-item dropdown active" sec:authorize="hasRole('ROLE_ADMIN')">
+                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    <span th:text="#{user.message}">Gestión de usuarios</span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/user/add">
+                        <span th:text="#{user.add.message}">Agregar usuarios</span>
+                    </a>
+                    <a class="dropdown-item" href="/user/list">
+                        <span th:text="#{user.list.message}">Ver usuarios</span>
+                    </a>
+                </div>
+            </li>
+            <li class="nav-item dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
+                <a class="nav-link dropdown-toggle" href="#" id="profesorDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    <span th:text="#{professor.message}">Gestión de profesores</span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/professor/add">
+                        <span th:text="#{professor.add.message}">Agregar profesores</span>
+                    </a>
+                    <a class="dropdown-item" href="/professor/list">
+                        <span th:text="#{professor.list.message}">Ver profesores</span>
+                    </a>
+                    <a class="dropdown-item" href="/professor/edit">
+                        <span th:text="#{professor.edit.message}">Editar profesores</span>
+                    </a>
+                    <a class="dropdown-item" href="/professor/delete">
+                        <span th:text="#{professor.delete.message}">Eliminar profesores</span>
+                    </a>
+                </div>
+            </li>
+        </ul>
+        <ul class="navbar-nav justify-content-end">
+            <!-- Añado cambios para la internacionalización -->
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="btnLanguage" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    <span th:text="#{language.change}"></span>
+                </a>
+                <div id="languageDropdownMenuButton" class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" id="btnEnglish" value="EN">
+                        <img th:src="@{/images/if_uk_flag.png}" style="border: 0; float: left; margin-right: 15px"/>
+                        <span th:text="#{language.en}">Inglés</span>
+                    </a>
+                    <a class="dropdown-item" id="btnSpanish" value="ES">
+                        <img th:src="@{/images/if_spain_flag.png}" style="border: 0; float: left; margin-right: 15px"/>
+                        <span th:text="#{language.es}">Español</span>
+                    </a>
+                    <a class="dropdown-item" id="btnFrench" value="FR">
+                        <img th:src="@{/images/if_france_flag.png}" style="border: 0; float: left; margin-right: 15px"/>
+                        <span th:text="#{language.fr}">Francés</span>
+                    </a>
+                </div>
+            </li>
+            <li sec:authorize="!isAuthenticated()" class="nav-item">
+                <a class="nav-link" href="/registrarse" th:text="#{signup.message}">
+                    <i class='fas fa-user-alt' style='font-size:16px'></i>
+                    <span>Registrate</span>
+                </a>
+            </li>
+            <li sec:authorize="!isAuthenticated()" class="nav-item">
+                <a class="nav-link" href="/identificarse" th:text="#{login.message}">
+                    <i class='fas fa-sign-in-alt' style='font-size:16px'></i>
+                    <span>Identifícate</span>
+                </a>
+            </li>
+            <li sec:authorize="isAuthenticated()" class="nav-item">
+                <a class="nav-link" href="/logout">
+                    <i class='fas fa-sign-out-alt' style='font-size:16px'></i>
+                    <span>Desconectar</span>
+                </a>
+            </li>
+        </ul>
+    </div>
 </nav>
