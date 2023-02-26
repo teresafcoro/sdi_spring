@@ -1,6 +1,7 @@
 package com.uniovi.sdi2223505spring.controllers;
 
 import com.uniovi.sdi2223505spring.entities.User;
+import com.uniovi.sdi2223505spring.services.RolesService;
 import com.uniovi.sdi2223505spring.services.SecurityService;
 import com.uniovi.sdi2223505spring.services.UsersService;
 import com.uniovi.sdi2223505spring.validators.SignUpFormValidator;
@@ -21,6 +22,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 public class UsersController {
 
     @Autowired
+    private RolesService rolesService;
+
+    @Autowired
     private UsersService usersService;
 
     @Autowired
@@ -37,7 +41,9 @@ public class UsersController {
 
     @RequestMapping(value = "/user/add")
     public String getUser(Model model) {
-        model.addAttribute("usersList", usersService.getUsers());
+        // model.addAttribute("usersList", usersService.getUsers());
+        // Obtengo la lista de roles y la envío a la vista (muestra los roles disponibles)
+        model.addAttribute("rolesList", rolesService.getRoles());
         return "user/add";
     }
 
@@ -82,7 +88,7 @@ public class UsersController {
         signUpFormValidator.validate(user, result);
         if (result.hasErrors())
             return "signup";
-
+        user.setRole(rolesService.getRoles()[0]); // ¡Debe tener un rol!
         usersService.addUser(user);
         securityService.autoLogin(user.getDni(), user.getPasswordConfirm());
         return "redirect:home";
