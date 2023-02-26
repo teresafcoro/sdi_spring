@@ -1,5 +1,6 @@
 package com.uniovi.sdi2223505spring.controllers;
 
+import com.uniovi.sdi2223505spring.entities.User;
 import com.uniovi.sdi2223505spring.services.MarksService;
 import com.uniovi.sdi2223505spring.services.UsersService;
 import com.uniovi.sdi2223505spring.validators.MarkEditFormValidator;
@@ -10,6 +11,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import com.uniovi.sdi2223505spring.entities.Mark;
 import org.springframework.ui.Model;
+
+import java.security.Principal;
 
 @Controller
 public class MarksController {
@@ -24,8 +27,11 @@ public class MarksController {
     private MarkEditFormValidator markEditFormValidator;
 
     @RequestMapping("/mark/list")
-    public String getList(Model model) {
-        model.addAttribute("markList", marksService.getMarks());
+    public String getList(Model model, Principal principal) {
+        // Principal nos permite obtener el usuario autenticado
+        String dni = principal.getName(); // DNI es el name de la autenticación
+        User user = usersService.getUserByDni(dni);
+        model.addAttribute("markList", marksService.getMarksForUser(user));
         return "mark/list";
     }
 
@@ -72,8 +78,10 @@ public class MarksController {
 
     // Defino el endpoint para devolver el fragmento correspondiente, en lugar de la vista completa
     @RequestMapping("/mark/list/update")
-    public String updateList(Model model) {
-        model.addAttribute("markList", marksService.getMarks());
+    public String updateList(Model model, Principal principal) {
+        String dni = principal.getName(); // DNI es el name de la autenticación
+        User user = usersService.getUserByDni(dni);
+        model.addAttribute("markList", marksService.getMarksForUser(user));
         return "mark/list :: tableMarks";
     }
 
