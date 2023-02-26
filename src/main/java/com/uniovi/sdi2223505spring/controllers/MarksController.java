@@ -11,13 +11,19 @@ import org.springframework.web.bind.annotation.*;
 import com.uniovi.sdi2223505spring.entities.Mark;
 import org.springframework.ui.Model;
 
+import javax.servlet.http.HttpSession;
+import java.util.HashSet;
+import java.util.Set;
+
 @Controller
 public class MarksController {
 
-    @Autowired // Inyectar el servicio
+    @Autowired
+    private HttpSession httpSession;
+
+    @Autowired
     private MarksService marksService;
 
-    // Inyecto el servicio y modifico los siguientes métodos: getMark, y getEdit setEdit
     @Autowired
     private UsersService usersService;
 
@@ -26,6 +32,12 @@ public class MarksController {
 
     @RequestMapping("/mark/list")
     public String getList(Model model) {
+        // Obtengo y envió la lista de notas consultadas
+        Set<Mark> consultedList = (Set<Mark>) httpSession.getAttribute("consultedList");
+        if (consultedList == null) {
+            consultedList = new HashSet<Mark>();
+        }
+        model.addAttribute("consultedList", consultedList);
         model.addAttribute("markList", marksService.getMarks());
         return "mark/list";
     }
