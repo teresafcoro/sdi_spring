@@ -58,7 +58,7 @@ public class ProfessorController {
     public String setEdit(@ModelAttribute Professor professor, @PathVariable String dni) {
         professor.setDni(dni);
         professorsService.addProfessor(professor);
-        return "redirect:/professor/details/" + dni;
+        return "redirect:/professor/details" + dni;
     }
 
     @RequestMapping(value = "/professor/edit", method = RequestMethod.GET)

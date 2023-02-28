@@ -85,13 +85,13 @@
                 </div>
             </li>
             <li sec:authorize="!isAuthenticated()" class="nav-item">
-                <a class="nav-link" href="/registrarse" th:text="#{signup.message}">
+                <a class="nav-link" href="/signup" th:text="#{signup.message}">
                     <i class='fas fa-user-alt' style='font-size:16px'></i>
                     <span>Registrate</span>
                 </a>
             </li>
             <li sec:authorize="!isAuthenticated()" class="nav-item">
-                <a class="nav-link" href="/identificarse" th:text="#{login.message}">
+                <a class="nav-link" href="/login" th:text="#{login.message}">
                     <i class='fas fa-sign-in-alt' style='font-size:16px'></i>
                     <span>Identifícate</span>
                 </a>
