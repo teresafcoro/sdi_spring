@@ -41,22 +41,23 @@
                     </a>
                 </div>
             </li>
-            <li class="nav-item dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
+            <!-- <li class="nav-item dropdown" sec:authorize="hasRole('ROLE_ADMIN')"> -->
+            <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="profesorDropdown" role="button" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">
                     <span th:text="#{professor.message}">Gestión de profesores</span>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="/professor/add">
+                    <a class="dropdown-item" href="/professor/add" sec:authorize="hasRole('ROLE_ADMIN')">
                         <span th:text="#{professor.add.message}">Agregar profesores</span>
                     </a>
                     <a class="dropdown-item" href="/professor/list">
                         <span th:text="#{professor.list.message}">Ver profesores</span>
                     </a>
-                    <a class="dropdown-item" href="/professor/edit">
+                    <a class="dropdown-item" href="/professor/edit" sec:authorize="hasRole('ROLE_ADMIN')">
                         <span th:text="#{professor.edit.message}">Editar profesores</span>
                     </a>
-                    <a class="dropdown-item" href="/professor/delete">
+                    <a class="dropdown-item" href="/professor/delete" sec:authorize="hasRole('ROLE_ADMIN')">
                         <span th:text="#{professor.delete.message}">Eliminar profesores</span>
                     </a>
                 </div>
@@ -85,7 +86,7 @@
                 </div>
             </li>
             <li sec:authorize="!isAuthenticated()" class="nav-item">
-                <a class="nav-link" href="/signup" th:text="#{signup.message}">
+                <a class="nav-link" href="/singup" th:text="#{signup.message}">
                     <i class='fas fa-user-alt' style='font-size:16px'></i>
                     <span>Registrate</span>
                 </a>
