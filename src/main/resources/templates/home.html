@@ -10,7 +10,9 @@
     <p th:text="#{authentication.message}">
         <b th:inline="text" sec:authentication="principal.username"></b>
     </p>
-    <p th:text="#{user.marks.message}"></p>
+    <p sec:authorize="hasRole('ROLE_STUDENT')" th:text="#{user.marks.message}"></p>
+    <p sec:authorize="hasRole('ROLE_PROFESSOR')" th:text="#{professor.marks.message}"></p>
+    <p sec:authorize="hasRole('ROLE_ADMIN')" th:text="#{admin.marks.message}"></p>
     <!-- Botón que permite recargar únicamente la tabla, para ello realiza una llamada a
          /list/update y sustituye el contenido de la tabla con id tableMarks -->
     <button type="button" id="updateButton" class="btn btn-primary">Actualizar</button>
