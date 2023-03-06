@@ -6,7 +6,7 @@ import org.openqa.selenium.WebElement;
 
 public class PO_LoginView extends PO_NavView {
 
-    static public void fillForm(WebDriver driver, String dnip, String passwordp) {
+    static public void fillLoginForm(WebDriver driver, String dnip, String passwordp) {
         WebElement dni = driver.findElement(By.name("dni"));
         dni.click();
         dni.clear();
