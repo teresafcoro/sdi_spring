@@ -34,5 +34,4 @@ public class PO_Properties {
 		return result;
 	}
 
-	
 }

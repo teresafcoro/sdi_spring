@@ -154,7 +154,7 @@ class Sdi2223505SpringApplicationTests {
     public void PR08() {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
         PO_LoginView.fillLoginForm(driver, "99999993D", "123456");
-        String checkText = "Notas del profesor";
+        String checkText = "Notas del usuario";
         List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
         Assertions.assertEquals(checkText, result.get(0).getText());
     }
@@ -166,7 +166,7 @@ class Sdi2223505SpringApplicationTests {
     public void PR09() {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
         PO_LoginView.fillLoginForm(driver, "99999988F", "123456");
-        String checkText = "Notas del administrador";
+        String checkText = "Notas del usuario";
         List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
         Assertions.assertEquals(checkText, result.get(0).getText());
     }
@@ -196,7 +196,7 @@ class Sdi2223505SpringApplicationTests {
         String checkText = "Notas del usuario";
         List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
         Assertions.assertEquals(checkText, result.get(0).getText());
-        PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
+        PO_PrivateView.clickOption(driver, "logout", "class", "btn btn-primary");
     }
 
     //PR12. Loguearse, comprobar que se visualizan 4 filas de notas y desconectarse usando el rol de estudiante
@@ -207,15 +207,17 @@ class Sdi2223505SpringApplicationTests {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
         //Rellenamos el formulario
         PO_LoginView.fillLoginForm(driver, "99999990A", "123456");
-        //COmprobamos que entramos en la pagina privada de Alumno
+        //Comprobamos que entramos en la pagina privada de Alumno
         String checkText = "Notas del usuario";
         List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText, result.get(0).getText());
         //Contamos el número de filas de notas
         List<WebElement> markList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr", PO_View.getTimeout());
         Assertions.assertEquals(4, markList.size());
         //Ahora nos desconectamos y comprobamos que aparece el menú de registro
-        String loginText = PO_HomeView.getP().getString("signup.message", PO_Properties.getSPANISH());
-        PO_PrivateView.clickOption(driver, "logout", "text", loginText);
+        PO_PrivateView.clickOption(driver, "logout", "class", "btn btn-primary");
+        String signupText = PO_HomeView.getP().getString("signup.message", PO_Properties.getSPANISH());
+        PO_HomeView.clickOption(driver, "signup", "text", signupText);
     }
 
     //PR13. Loguearse como estudiante y ver los detalles de la nota con Descripcion = Nota A2.
@@ -227,6 +229,7 @@ class Sdi2223505SpringApplicationTests {
         PO_LoginView.fillLoginForm(driver, "99999990A", "123456");
         String checkText = "Notas del usuario";
         List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText, result.get(0).getText());
         //SeleniumUtils.esperarSegundos(driver, 1);
         //Contamos las notas
         By enlace = By.xpath("//td[contains(text(), 'Nota A2')]/following-sibling::*[2]");
@@ -236,22 +239,22 @@ class Sdi2223505SpringApplicationTests {
         result = PO_View.checkElementBy(driver, "text", checkText);
         Assertions.assertEquals(checkText, result.get(0).getText());
         //Ahora nos desconectamos comprobamas que aparece el menu de registrarse
-        String loginText = PO_HomeView.getP().getString("signup.message", PO_Properties.getSPANISH());
-        PO_PrivateView.clickOption(driver, "logout", "text", loginText);
+        PO_PrivateView.clickOption(driver, "logout", "class", "btn btn-primary");
+        String signupText = PO_HomeView.getP().getString("signup.message", PO_Properties.getSPANISH());
+        PO_HomeView.clickOption(driver, "signup", "text", signupText);
     }
 
     //P14. Loguearse como profesor y Agregar Nota A2.
-//P14. Esta prueba podría encapsularse mejor ...
     @Test
     @Order(16)
     public void PR14() {
         //Vamos al formulario de login.
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
         PO_LoginView.fillLoginForm(driver, "99999993D", "123456");
-        //Cmmprobamos que entramos en la pagina privada del Profesor
+        //Comprobamos que entramos en la pagina privada del Profesor
         PO_View.checkElementBy(driver, "text", "99999993D");
         //Pinchamos en la opción de menú de Notas: //li[contains(@id, 'marks-menu')]/a
-        List<WebElement> elements = PO_View.checkElementBy(driver, "free", "//li[contains(@id, 'marksmenu')]/a");
+        List<WebElement> elements = PO_View.checkElementBy(driver, "free", "//li[contains(@id, 'marks-menu')]/a");
         elements.get(0).click();
         //Esperamos a que aparezca la opción de añadir nota: //a[contains(@href, 'mark/add')]
         elements = PO_View.checkElementBy(driver, "free", "//a[contains(@href, 'mark/add')]");
@@ -268,8 +271,9 @@ class Sdi2223505SpringApplicationTests {
         elements = PO_View.checkElementBy(driver, "text", checkText);
         Assertions.assertEquals(checkText, elements.get(0).getText());
         //Ahora nos desconectamos y comprobamos que aparece el menú de registrarse
-        String loginText = PO_HomeView.getP().getString("signup.message", PO_Properties.getSPANISH());
-        PO_PrivateView.clickOption(driver, "logout", "text", loginText);
+        PO_PrivateView.clickOption(driver, "logout", "class", "btn btn-primary");
+        String signupText = PO_HomeView.getP().getString("signup.message", PO_Properties.getSPANISH());
+        PO_HomeView.clickOption(driver, "signup", "text", signupText);
     }
 
     @Test
@@ -281,7 +285,7 @@ class Sdi2223505SpringApplicationTests {
         //Comprobamos que entramos en la página privada del Profesor
         PO_View.checkElementBy(driver, "text", "99999993D");
         //Pinchamos en la opción de menú de Notas: //li[contains(@id, 'marks-menu')]/a
-        List<WebElement> elements = PO_View.checkElementBy(driver, "free", "//li[contains(@id, 'marksmenu')]/ a");
+        List<WebElement> elements = PO_View.checkElementBy(driver, "free", "//li[contains(@id, 'marks-menu')]/ a");
         elements.get(0).click();
         //Pinchamos en la opción de lista de notas.
         elements = PO_View.checkElementBy(driver, "free", "//a[contains(@href, 'mark/list')]");
@@ -292,16 +296,17 @@ class Sdi2223505SpringApplicationTests {
         elements.get(3).click();
         //Esperamos a que aparezca la Nueva nota en la última página
         //Y Pinchamos en el enlace de borrado de la Nota "Nota Nueva 1"
-        elements = PO_View.checkElementBy(driver, "free", "//td[contains(text(), 'Nota Nueva 1')]/followingsibling::*/ a[contains(@href, 'mark/delete')]");
+        elements = PO_View.checkElementBy(driver, "free", "//td[contains(text(), 'Nota Nueva 1')]/following-sibling::*/a[contains(@href, 'mark/delete')]");
         elements.get(0).click();
         //Volvemos a la última página
         elements = PO_View.checkElementBy(driver, "free", "//a[contains(@class, 'page-link')]");
         elements.get(3).click();
         //Y esperamos a que NO aparezca la última "Nueva Nota 1"
-        SeleniumUtils.waitTextIsNotPresentOnPage(driver, "Nota Nueva 1",PO_View.getTimeout());
+        SeleniumUtils.waitTextIsNotPresentOnPage(driver, "Nota Nueva 1", PO_View.getTimeout());
         //Ahora nos desconectamos comprobamos que aparece el menú de registrarse
-        String loginText = PO_HomeView.getP().getString("signup.message", PO_Properties.getSPANISH());
-        PO_PrivateView.clickOption(driver, "logout", "text", loginText);
+        PO_PrivateView.clickOption(driver, "logout", "class", "btn btn-primary");
+        String signupText = PO_HomeView.getP().getString("signup.message", PO_Properties.getSPANISH());
+        PO_HomeView.clickOption(driver, "signup", "text", signupText);
     }
 
 }

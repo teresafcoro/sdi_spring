@@ -20,7 +20,7 @@ public class PO_NavView extends PO_View {
      * @param targetText: texto correspondiente a la búsqueda de la página destino.
      */
     public static void clickOption(WebDriver driver, String textOption, String criterio, String targetText) {
-        //CLickamos en la opción de registro y esperamos a que se cargue el enlace de Registro.
+        //Clickamos en la opción de registro y esperamos a que se cargue el enlace de Registro.
         List<WebElement> elements = SeleniumUtils.waitLoadElementsBy(driver, "@href", textOption,
                 getTimeout());
         //Tiene que haber un sólo elemento.
